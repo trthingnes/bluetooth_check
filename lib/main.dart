@@ -40,7 +40,9 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text(widget.title)),
+        title: Center(
+          child: Text(widget.title),
+        ),
       ),
       body: Center(
         child: Column(
@@ -49,11 +51,18 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
             BluetoothInfo(
               key: _btInfoKey,
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 30, 30, 0),
+              child: ElevatedButton(
+                child: const Text('Retrieve Bluetooth state'),
+                onPressed: () => _btInfoKey.currentState!.updateState(),
+              ),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Enable Bluetooth state updates',
+                  'Update automatically when state changes',
                 ),
                 Switch(
                   value: _stateUpdatesOn,
