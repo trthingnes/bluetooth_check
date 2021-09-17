@@ -70,7 +70,7 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
                     setState(() {
                       _btInfoKey.currentState!.enableStateUpdates(value);
                       _stateUpdatesOn =
-                          _btInfoKey.currentState!.stateUpdatesActive();
+                          _btInfoKey.currentState!.stateUpdatesEnabled();
                     });
                   },
                 ),

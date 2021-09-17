@@ -12,20 +12,20 @@ class BluetoothInfo extends StatefulWidget {
 
 class BluetoothInfoState extends State<BluetoothInfo> {
   final FlutterBlue _flutterBlue = FlutterBlue.instance;
-  late StreamSubscription _btStateSubscription;
-  late bool _bluetoothAvailable;
-  late bool _bluetoothOn;
+  late StreamSubscription _stateSubscription;
+  late bool _btAvailable;
+  late bool _btOn;
   String _stateInfo = 'No Bluetooth info has been retrieved yet.';
   String _lastUpdated = '';
   bool _updatesActive = false;
 
   /// Updates the state widget once.
   void updateState() async {
-    _bluetoothAvailable = await _flutterBlue.isAvailable;
-    _bluetoothOn = await _flutterBlue.isOn;
+    _btAvailable = await _flutterBlue.isAvailable;
+    _btOn = await _flutterBlue.isOn;
 
     setState(() {
-      _stateInfo = _getStateString(_bluetoothAvailable, _bluetoothOn);
+      _stateInfo = _getStateInfoString();
       _lastUpdated = _getLastUpdatedString();
     });
   }
@@ -35,16 +35,35 @@ class BluetoothInfoState extends State<BluetoothInfo> {
     _updatesActive = enable;
 
     if (enable) {
-      _btStateSubscription =
+      _stateSubscription =
           _flutterBlue.state.listen((state) => updateState());
     } else {
-      _btStateSubscription.cancel();
+      _stateSubscription.cancel();
     }
   }
 
   /// Gets whether live state updates are active or not.
-  bool stateUpdatesActive() {
+  bool stateUpdatesEnabled() {
     return _updatesActive;
+  }
+
+  /// Gets the current Bluetooth state string.
+  String _getStateInfoString() {
+    String _state = 'Bluetooth is';
+
+    if (_btAvailable) {
+      _state += ' available';
+
+      if (_btOn) {
+        _state += ' and turned on.';
+      } else {
+        _state += ', but turned off.';
+      }
+    } else {
+      _state += 'unavailable.';
+    }
+
+    return _state;
   }
 
   /// Gets the current last update string.
@@ -57,25 +76,6 @@ class BluetoothInfoState extends State<BluetoothInfo> {
         _hour.toString() +
         ((_minute < 10) ? ':0' : ':') +
         _minute.toString();
-  }
-
-  /// Gets the current Bluetooth state string.
-  String _getStateString(bool available, bool on) {
-    String _state = 'Bluetooth is';
-
-    if (available) {
-      _state += ' available';
-
-      if (on) {
-        _state += ' and turned on.';
-      } else {
-        _state += ', but turned off.';
-      }
-    } else {
-      _state += 'unavailable.';
-    }
-
-    return _state;
   }
 
   @override
