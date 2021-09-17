@@ -1,7 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
+
+import 'bluetooth_info.dart';
 
 void main() {
   runApp(const BluetoothCheckApp());
@@ -34,26 +33,8 @@ class BluetoothCheckHome extends StatefulWidget {
 }
 
 class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
-  final FlutterBlue _flutterBlue = FlutterBlue.instance;
-  StreamSubscription? _btStateSubscription;
-  bool streamPaused = false;
-  String _btInfo = 'Bluetooth state updates are disabled.';
-
-  void _setStateSubscription() {
-    bool _bluetoothAvailable, _bluetoothOn;
-    _btStateSubscription = _flutterBlue.state.listen((state) async => {
-      _bluetoothAvailable = await _flutterBlue.isAvailable,
-      _bluetoothOn = await _flutterBlue.isOn,
-
-      setState(() {
-        _btInfo = 'Bluetooth is ' +
-            (_bluetoothAvailable
-                ? 'available' +
-                (_bluetoothOn ? ' and enabled.' : ', but disabled.')
-                : 'not available.');
-      }),
-    });
-  }
+  final GlobalKey<BluetoothInfoState> _btInfoKey = GlobalKey();
+  bool _stateUpdatesOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +46,9 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            BluetoothInfo(
+              key: _btInfoKey,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -72,24 +56,16 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
                   'Enable Bluetooth state updates',
                 ),
                 Switch(
-                  value: streamPaused,
+                  value: _stateUpdatesOn,
                   onChanged: (bool value) {
                     setState(() {
-                      value ? _setStateSubscription() : _btStateSubscription!.cancel();
-                      _btInfo = 'Bluetooth state updates are disabled.';
-                      streamPaused = value;
+                      _btInfoKey.currentState!.enableStateUpdates(value);
+                      _stateUpdatesOn =
+                          _btInfoKey.currentState!.stateUpdatesActive();
                     });
                   },
                 ),
               ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Text(
-                _btInfo,
-                style: Theme.of(context).textTheme.subtitle1,
-                textAlign: TextAlign.center,
-              ),
             ),
           ],
         ),
