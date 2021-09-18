@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'bluetooth_info.dart';
+import 'native_bluetooth_info.dart';
 
 void main() {
   runApp(const BluetoothCheckApp());
@@ -34,7 +34,6 @@ class BluetoothCheckHome extends StatefulWidget {
 
 class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
   final GlobalKey<BluetoothInfoState> _btInfoKey = GlobalKey();
-  bool _stateUpdatesOn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,24 +56,6 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
                 child: const Text('Retrieve Bluetooth state'),
                 onPressed: () => _btInfoKey.currentState!.updateState(),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'Update automatically when state changes',
-                ),
-                Switch(
-                  value: _stateUpdatesOn,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _btInfoKey.currentState!.enableStateUpdates(value);
-                      _stateUpdatesOn =
-                          _btInfoKey.currentState!.stateUpdatesEnabled();
-                    });
-                  },
-                ),
-              ],
             ),
           ],
         ),
