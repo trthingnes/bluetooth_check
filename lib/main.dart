@@ -47,6 +47,15 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Icon(
+                Icons.bluetooth,
+                size: 80,
+                color: Theme.of(context).primaryColor,
+                semanticLabel: "Bluetooth Icon",
+              ),
+            ),
             BluetoothInfo(
               key: _btInfoKey,
             ),
