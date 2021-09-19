@@ -48,7 +48,7 @@ class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Icon(
                 Icons.bluetooth,
                 size: 80,

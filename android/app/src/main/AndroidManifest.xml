@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.ntnu.tobiasth.bluetooth_check">
    <application
-        android:label="bluetooth_check"
+        android:label="Bluetooth Check"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
