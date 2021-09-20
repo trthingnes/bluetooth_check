@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue/flutter_blue.dart';
 
+/// ! This file is the first version of the BluetoothInfo widget.
+/// ! Please use the new version that does not require a 3rd party package.
+@Deprecated("Import 'native_bluetooth_info.dart' instead")
 class BluetoothInfo extends StatefulWidget {
   const BluetoothInfo({required Key key}) : super(key: key);
 

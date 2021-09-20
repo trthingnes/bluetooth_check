@@ -6,10 +6,11 @@ void main() {
   runApp(const BluetoothCheckApp());
 }
 
+/// * App class
+/// Sets application wide settings and builds app home.
 class BluetoothCheckApp extends StatelessWidget {
   const BluetoothCheckApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -23,6 +24,7 @@ class BluetoothCheckApp extends StatelessWidget {
   }
 }
 
+/// * Home class
 class BluetoothCheckHome extends StatefulWidget {
   const BluetoothCheckHome({Key? key, required this.title}) : super(key: key);
 
@@ -32,7 +34,10 @@ class BluetoothCheckHome extends StatefulWidget {
   State<BluetoothCheckHome> createState() => _BluetoothCheckHomeState();
 }
 
+/// * Home state class
+/// Builds app layout and contains state.
 class _BluetoothCheckHomeState extends State<BluetoothCheckHome> {
+  // This key allows for communication with the bluetooth_info widget.
   final GlobalKey<BluetoothInfoState> _btInfoKey = GlobalKey();
 
   @override

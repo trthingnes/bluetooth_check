@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// * Widget class
 class BluetoothInfo extends StatefulWidget {
   const BluetoothInfo({required Key key}) : super(key: key);
 
@@ -10,6 +11,8 @@ class BluetoothInfo extends StatefulWidget {
   BluetoothInfoState createState() => BluetoothInfoState();
 }
 
+/// * Widget state class
+/// Contains layout and logic for retrieving and updating Bluetooth status.
 class BluetoothInfoState extends State<BluetoothInfo> {
   static const platform = MethodChannel('tobiasth.ntnu.edu/bluetoothcheck');
 
